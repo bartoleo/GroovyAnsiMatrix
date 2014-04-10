@@ -4,9 +4,9 @@ import org.fusesource.jansi.Ansi.Attribute
 import java.util.Random  
 
 Random rand = new Random()  
- 
-int width = 80
-int height = 25
+
+int width = args.size()<1?80:args[0].toInteger()
+int height = args.size()<2?25:args[1].toInteger()
 def letters = []
 int sleepTime = 15
 int ticks=0
@@ -24,30 +24,35 @@ int charactersSize = characters.size()
 print ansi().cursor(1,1).reset().bg(Color.BLACK)
 
 while (true){
+	int yOffset
 	sleep(sleepTime)
 	ticks++
 	letters.each{
 	  it.y+=it.speed
-	  if (it.y<=height){
+	  if (it.y<=height&&it.y>0){
 	  	  print ansi().cursor((int)(it.y),it.x).fgBright(Color.WHITE).a(Attribute.INTENSITY_BOLD_OFF).a(Attribute.INTENSITY_BOLD).a(characters[rand.nextInt(charactersSize)]).cursor(0,0)  
 	  }
-	  if (it.y-1<=height){
-	  	  print ansi().cursor((int)(it.y-1),it.x).fgBright(Color.GREEN).a(Attribute.INTENSITY_BOLD_OFF).a(it.character).cursor(0,0)  	  
+	  yOffset = 1
+	  if (it.y-yOffset<=height&&it.y-yOffset>0){
+	  	  print ansi().cursor((int)(it.y-yOffset),it.x).fgBright(Color.GREEN).a(Attribute.INTENSITY_BOLD_OFF).a(it.character).cursor(0,0)  	  
 	  }
-	  if (it.y-it.speed*20<=height){
-	  	  print ansi().cursor((int)(it.y-it.speed*20),it.x).fgBright(Color.GREEN).a(Attribute.INTENSITY_BOLD_OFF).a(Attribute.INTENSITY_FAINT).a(it.character).cursor(0,0)  	  
+	  yOffset = it.speed*20
+	  if (it.y-yOffset<=height&&it.y-yOffset>0){
+	  	  print ansi().cursor((int)(it.y-yOffset),it.x).fgBright(Color.GREEN).a(Attribute.INTENSITY_BOLD_OFF).a(Attribute.INTENSITY_FAINT).a(it.character).cursor(0,0)  	  
 	  }
-	  if (it.y-it.speed*40<=height){
-	  	  print ansi().cursor((int)(it.y-it.speed*40),it.x).fg(Color.GREEN).a(Attribute.INTENSITY_BOLD_OFF).a(Attribute.INTENSITY_FAINT).a(it.character).cursor(0,0)  	  
+	  yOffset = it.speed*40
+	  if (it.y-yOffset<=height&&it.y-yOffset>0){
+	  	  print ansi().cursor((int)(it.y-yOffset),it.x).fg(Color.GREEN).a(Attribute.INTENSITY_BOLD_OFF).a(Attribute.INTENSITY_FAINT).a(it.character).cursor(0,0)  	  
 	  }
-	  if (it.y-it.speed*60<=height){
-	  	  print ansi().cursor((int)(it.y-it.speed*60),it.x).a(' ')	  
+	  yOffset = it.speed*70
+	  if (it.y-yOffset<=height&&it.y-yOffset>0){
+	  	  print ansi().cursor((int)(it.y-yOffset),it.x).a(' ')	  
 	  }
 	}
 	letters.removeAll{
-	  it.y-it.speed*60>=height
+	  it.y-it.speed*70>=height
 	}
-	if (letters.size()<width/1.5){
+	if (ticks>2&&letters.size()<width/1.75){
 	  ticks=0
 	  letters.add(new Letter(x:rand.nextInt(width+1),y:0,character:characters[rand.nextInt(charactersSize)],speed:0.125d+rand.nextDouble()*0.25d))
 	}
