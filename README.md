@@ -1,6 +1,9 @@
 GroovyAnsiMatrix
 ================
-Groovy experiment Matrix style falling characters
+Matrix falling chars experiment made in [ansi][ansi] ([Jansi][Jansi]) with [Groovy][Groovy]
+[Jansi]: http://jansi.fusesource.org/
+[ansi]: http://en.wikipedia.org/wiki/ANSI_escape_code "Wikipedia"
+[Groovy]: http://groovy.codehaus.org/
 
 Needs Groovy >= 2.2.0 (needs jansi >= 1.9)
 
