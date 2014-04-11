@@ -52,7 +52,7 @@ while (true){
 	letters.removeAll{
 	  it.y-it.speed*70>=height
 	}
-	if (ticks>2&&letters.size()<width/1.75){
+	if (ticks>2&&letters.size()<width/1.25){
 	  ticks=0
 	  letters.add(new Letter(x:rand.nextInt(width+1),y:0,character:characters[rand.nextInt(charactersSize)],speed:0.125d+rand.nextDouble()*0.25d))
 	}
